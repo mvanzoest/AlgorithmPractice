@@ -1,4 +1,5 @@
-﻿using AlgorithmPractice;
+﻿using System;
+using AlgorithmPractice;
 using FluentAssertions;
 using Xunit;
 
@@ -36,8 +37,17 @@ namespace AlgorithmPracticeTests
             AdditionAlgorithm.Add("7", "11").Should().Be("18");
         }
 
-        // Test: different digit length
-        // Test: invalid characters
+        [Fact]
+        public void Add_WhenInvalidOperand1_Throws()
+        {
+            Assert.Throws<InvalidOperationException>(() => AdditionAlgorithm.Add("foo", "1"));
+        }
+
+        [Fact]
+        public void Add_WhenInvalidOperand2_Throws()
+        {
+            Assert.Throws<InvalidOperationException>(() => AdditionAlgorithm.Add("1", "foo"));
+        }
 
         // Note: negative numbers must be represented by a subtraction algorithm.
     }

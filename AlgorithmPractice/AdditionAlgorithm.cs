@@ -32,6 +32,12 @@ namespace AlgorithmPractice
                 var c1 = chars1[i];
                 var c2 = chars2[i];
 
+                if (c1 < ZeroAsciiIndexDecimal || c1 > ZeroAsciiIndexDecimal + 9 ||
+                    c2 < ZeroAsciiIndexDecimal || c2 > ZeroAsciiIndexDecimal + 9)
+                {
+                    throw new InvalidOperationException();
+                }
+
                 var d1 = c1 - ZeroAsciiIndexDecimal;
                 var d2 = c2 - ZeroAsciiIndexDecimal;
 
