@@ -19,22 +19,8 @@ namespace AlgorithmPractice
 
             if (chars1.Count != chars2.Count)
             {
-                var prefix1 = new string('0', Math.Max(chars2.Count - chars1.Count, 0)).ToCharArray().ToList();
-                var prefix2 = new string('0', Math.Max(chars1.Count - chars2.Count, 0)).ToCharArray().ToList();
-
-                var paddedChars1 = new List<char>();
-
-                paddedChars1.AddRange(prefix1);
-                paddedChars1.AddRange(chars1);
-
-                var paddedChars2 = new List<char>();
-
-                paddedChars2.AddRange(prefix2);
-                paddedChars2.AddRange(chars2);
-
-                chars1 = paddedChars1;
-                chars2 = paddedChars2;
-
+                chars1 = PadNumber(chars1, Math.Max(chars2.Count - chars1.Count, 0));
+                chars2 = PadNumber(chars2, Math.Max(chars1.Count - chars2.Count, 0));
             }
 
             var carry = 0;
@@ -63,6 +49,17 @@ namespace AlgorithmPractice
             }
 
             return sum.ToString();
+        }
+
+        private static List<char> PadNumber(List<char> chars1, int paddingSize)
+        {
+            var prefix1 = new string('0', paddingSize).ToCharArray().ToList();
+            var paddedChars1 = new List<char>();
+
+            paddedChars1.AddRange(prefix1);
+            paddedChars1.AddRange(chars1);
+
+            return paddedChars1;
         }
     }
 }
