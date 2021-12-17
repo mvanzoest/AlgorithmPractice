@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AlgorithmPractice.Utilities;
 
 namespace AlgorithmPractice.Algorithms
 {
     public static class AdditionAlgorithm
     {
-        private const int ZeroAsciiIndexDecimal = 48;
-
         /// <summary>
         /// Adds two numbers represented as strings.
         /// </summary>
@@ -66,19 +65,10 @@ namespace AlgorithmPractice.Algorithms
 
         private static (int, int) GetDigits((List<char>, List<char>) chars, int index)
         {
-            var d1 = GetDigit(chars.Item1[index]);
-            var d2 = GetDigit(chars.Item2[index]);
+            var d1 = chars.Item1[index].ToDigit();
+            var d2 = chars.Item2[index].ToDigit();
 
             return (d1, d2);
-        }
-
-        private static int GetDigit(char c)
-        {
-            if (c < ZeroAsciiIndexDecimal || c > ZeroAsciiIndexDecimal + 9)
-            {
-                throw new InvalidOperationException();
-            }
-            return c - ZeroAsciiIndexDecimal;
         }
 
         private static List<char> ToCharList(this string s)
