@@ -1,4 +1,5 @@
-﻿using AlgorithmPractice.Algorithms;
+﻿using System;
+using AlgorithmPractice.Algorithms;
 using FluentAssertions;
 using Xunit;
 
@@ -64,6 +65,18 @@ namespace AlgorithmPracticeTests
         public void Multiply_WhenTwoZeros_ReturnsZero()
         {
             MultiplicationAlgorithm.Multiply("00", "00").Should().Be("0");
+        }
+
+        [Theory]
+        [InlineData("foo", "0")]
+        [InlineData("0", "foo")]
+        [InlineData("", "1")]
+        [InlineData("1", "")]
+        [InlineData(null, "1")]
+        [InlineData("1", null)]
+        public void Multiply_WhenInvalidInput_Throws(string operand1, string operand2)
+        {
+            Assert.Throws<InvalidOperationException>(() => MultiplicationAlgorithm.Multiply(operand1, operand2));
         }
     }
 }

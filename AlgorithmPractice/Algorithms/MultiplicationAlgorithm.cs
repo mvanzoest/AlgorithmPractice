@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using AlgorithmPractice.Utilities;
 
@@ -8,6 +9,9 @@ namespace AlgorithmPractice.Algorithms
     {
         public static string Multiply(string factor1, string factor2)
         {
+            factor1.ThrowIfNullOrEmpty();
+            factor2.ThrowIfNullOrEmpty();
+
             var subProducts = new List<string>();
 
             for (var i = factor2.Length - 1; i >= 0; i--)
@@ -62,6 +66,14 @@ namespace AlgorithmPractice.Algorithms
             }
 
             return product;
+        }
+
+        private static void ThrowIfNullOrEmpty(this string s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                throw new InvalidOperationException();
+            }
         }
     }
 }
