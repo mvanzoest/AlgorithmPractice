@@ -38,6 +38,12 @@ namespace AlgorithmPracticeTests
         }
 
         [Fact]
+        public void Add_Adds11To7_Returns18()
+        {
+            AdditionAlgorithm.Add("11", "7").Should().Be("18");
+        }
+
+        [Fact]
         public void Add_WhenInvalidOperand1_Throws()
         {
             Assert.Throws<InvalidOperationException>(() => AdditionAlgorithm.Add("foo", "1"));
