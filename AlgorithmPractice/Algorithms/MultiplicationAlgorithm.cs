@@ -7,30 +7,30 @@ namespace AlgorithmPractice.Algorithms
 {
     public static class MultiplicationAlgorithm
     {
-        public static string Multiply(string factor1, string factor2)
+        public static string Multiply(string topFactor, string bottomFactor)
         {
-            factor1.ThrowIfNullOrEmpty();
-            factor2.ThrowIfNullOrEmpty();
+            topFactor.ThrowIfNullOrEmpty();
+            bottomFactor.ThrowIfNullOrEmpty();
 
             var sign = 1;
 
-            ComputeSign(ref factor1, ref sign);
-            ComputeSign(ref factor2, ref sign);
+            ComputeSign(ref topFactor, ref sign);
+            ComputeSign(ref bottomFactor, ref sign);
 
             var subProducts = new List<string>();
 
-            for (var i = factor2.Length - 1; i >= 0; i--)
+            for (var i = bottomFactor.Length - 1; i >= 0; i--)
             {
-                var start = new string('0', factor2.Length - (i + 1));
+                var start = new string('0', bottomFactor.Length - (i + 1));
                 var subProduct = new StringBuilder(start);
                 var carry = 0;
 
-                for (var j = factor1.Length - 1; j >= 0; j--)
+                for (var j = topFactor.Length - 1; j >= 0; j--)
                 {
-                    var digit1 = factor1[j].ToDigit();
-                    var digit2 = factor2[i].ToDigit();
+                    var bottomDigit = bottomFactor[i].ToDigit();
+                    var topDigit = topFactor[j].ToDigit();
 
-                    var innerProduct = digit1 * digit2 + carry;
+                    var innerProduct = bottomDigit * topDigit + carry;
                     var result = innerProduct % 10;
 
                     carry = innerProduct / 10;
@@ -46,19 +46,7 @@ namespace AlgorithmPractice.Algorithms
                 subProducts.Add(subProduct.ToString());
             }
 
-            var product = "0";
-
-            foreach (var subProduct in subProducts)
-            {
-                product = AdditionAlgorithm.Add(product, subProduct);
-            }
-
-            product = TrimLeadingZeros(product);
-
-            if (sign < 0)
-            {
-                product = "-" + product;
-            }
+            var product = BuildProduct(subProducts, sign);
 
             return product;
         }
@@ -70,6 +58,27 @@ namespace AlgorithmPractice.Algorithms
                 sign *= -1;
                 factor = factor.Substring(1);
             }
+        }
+
+        private static string BuildProduct(List<string> subProducts, int sign)
+        {
+            var subProductSum = AddSubProducts(subProducts);
+            var trimmedProduct = TrimLeadingZeros(subProductSum);
+            var signedProduct = (sign < 0 ? "-" : "") + trimmedProduct;
+
+            return signedProduct;
+        }
+
+        private static string AddSubProducts(List<string> subProducts)
+        {
+            var product = "0";
+
+            foreach (var subProduct in subProducts)
+            {
+                product = AdditionAlgorithm.Add(product, subProduct);
+            }
+
+            return product;
         }
 
         private static string TrimLeadingZeros(string product)
