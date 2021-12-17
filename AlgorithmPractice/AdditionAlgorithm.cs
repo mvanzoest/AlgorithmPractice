@@ -29,17 +29,8 @@ namespace AlgorithmPractice
 
             for (var i = chars1.Count - 1; i >= 0; i--)
             {
-                var c1 = chars1[i];
-                var c2 = chars2[i];
-
-                if (c1 < ZeroAsciiIndexDecimal || c1 > ZeroAsciiIndexDecimal + 9 ||
-                    c2 < ZeroAsciiIndexDecimal || c2 > ZeroAsciiIndexDecimal + 9)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                var d1 = c1 - ZeroAsciiIndexDecimal;
-                var d2 = c2 - ZeroAsciiIndexDecimal;
+                var d1 = GetDigit(chars1[i]);
+                var d2 = GetDigit(chars2[i]);
 
                 var result = d1 + d2 + carry;
                 var digit = result % 10;
@@ -57,15 +48,24 @@ namespace AlgorithmPractice
             return sum.ToString();
         }
 
-        private static List<char> PadNumber(List<char> chars1, int paddingSize)
+        private static List<char> PadNumber(List<char> chars, int paddingSize)
         {
-            var prefix1 = new string('0', paddingSize).ToCharList();
-            var paddedChars1 = new List<char>();
+            var prefix = new string('0', paddingSize).ToCharList();
+            var result = new List<char>();
 
-            paddedChars1.AddRange(prefix1);
-            paddedChars1.AddRange(chars1);
+            result.AddRange(prefix);
+            result.AddRange(chars);
 
-            return paddedChars1;
+            return result;
+        }
+
+        private static int GetDigit(char c)
+        {
+            if (c < ZeroAsciiIndexDecimal || c > ZeroAsciiIndexDecimal + 9)
+            {
+                throw new InvalidOperationException();
+            }
+            return c - ZeroAsciiIndexDecimal;
         }
 
         private static List<char> ToCharList(this string s)
