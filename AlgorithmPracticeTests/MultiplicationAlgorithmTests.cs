@@ -19,27 +19,51 @@ namespace AlgorithmPracticeTests
         }
 
         [Fact]
-        public void Multiply_2DigitOperands_ReturnsProduct()
+        public void Multiply_TwoDigitOperands_ReturnsProduct()
         {
             MultiplicationAlgorithm.Multiply("36", "71").Should().Be("2556");
         }
 
         [Fact]
-        public void Multiply_OperandsDifferingBy1Digit_ReturnsProduct()
+        public void Multiply_OperandsDifferingByOneDigit_ReturnsProduct()
         {
             MultiplicationAlgorithm.Multiply("7", "71").Should().Be("497");
         }
 
         [Fact]
-        public void Multiply_OperandsDifferingBy2DigitsBackHeavy_ReturnsProduct()
+        public void Multiply_OperandsDifferingByTwoDigitsBackHeavy_ReturnsProduct()
         {
             MultiplicationAlgorithm.Multiply("7", "100").Should().Be("700");
         }
 
         [Fact]
-        public void Multiply_OperandsDifferingBy2DigitsFrontHeavy_ReturnsProduct()
+        public void Multiply_OperandsDifferingByTwoDigitsFrontHeavy_ReturnsProduct()
         {
             MultiplicationAlgorithm.Multiply("700", "1").Should().Be("700");
+        }
+
+        [Fact]
+        public void Multiply_ThreeDigitOperands_ReturnsProduct()
+        {
+            MultiplicationAlgorithm.Multiply("100", "100").Should().Be("10000");
+        }
+
+        [Fact]
+        public void Multiply_WhenExceedingMaxInteger_DoesNotOverflow()
+        {
+            MultiplicationAlgorithm.Multiply("99999", "99999").Should().Be("9999800001");
+        }
+
+        [Fact]
+        public void Multiply_WhenOneZero_ReturnsZero()
+        {
+            MultiplicationAlgorithm.Multiply("0", "15").Should().Be("0");
+        }
+
+        [Fact]
+        public void Multiply_WhenTwoZeros_ReturnsZero()
+        {
+            MultiplicationAlgorithm.Multiply("00", "00").Should().Be("0");
         }
     }
 }

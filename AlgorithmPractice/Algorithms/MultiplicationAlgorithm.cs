@@ -44,6 +44,23 @@ namespace AlgorithmPractice.Algorithms
                 product = AdditionAlgorithm.Add(product, subProduct);
             }
 
+            product = TrimLeadingZeros(product);
+
+            return product;
+        }
+
+        private static string TrimLeadingZeros(string product)
+        {
+            var chars = product.ToCharArray();
+
+            for (var i = 0; i < chars.Length; i++)
+            {
+                if (chars[0] == '0' && i != chars.Length - 1)
+                {
+                    product = product.Substring(1);
+                }
+            }
+
             return product;
         }
     }
