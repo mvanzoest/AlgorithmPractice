@@ -49,6 +49,16 @@ namespace AlgorithmPracticeTests
             Assert.Throws<InvalidOperationException>(() => AdditionAlgorithm.Add("1", "foo"));
         }
 
+        [Fact]
+        public void Add_AddsTwoLargeNumbers_ReturnsSum()
+        {
+            var op1 = "354534250504";
+            var op2 = "789345923452";
+            var sum = "1143880173956";
+
+            AdditionAlgorithm.Add(op1, op2).Should().Be(sum);
+        }
+
         // Note: negative numbers must be represented by a subtraction algorithm.
     }
 }
