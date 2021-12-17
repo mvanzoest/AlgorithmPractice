@@ -14,8 +14,8 @@ namespace AlgorithmPractice
         /// </summary>
         public static string Add(string operand1, string operand2)
         {
-            var chars1 = operand1.ToCharArray().ToList();
-            var chars2 = operand2.ToCharArray().ToList();
+            var chars1 = operand1.ToCharList();
+            var chars2 = operand2.ToCharList();
 
             if (chars1.Count != chars2.Count)
             {
@@ -53,13 +53,18 @@ namespace AlgorithmPractice
 
         private static List<char> PadNumber(List<char> chars1, int paddingSize)
         {
-            var prefix1 = new string('0', paddingSize).ToCharArray().ToList();
+            var prefix1 = new string('0', paddingSize).ToCharList();
             var paddedChars1 = new List<char>();
 
             paddedChars1.AddRange(prefix1);
             paddedChars1.AddRange(chars1);
 
             return paddedChars1;
+        }
+
+        private static List<char> ToCharList(this string s)
+        {
+            return s.ToCharArray().ToList();
         }
     }
 }
