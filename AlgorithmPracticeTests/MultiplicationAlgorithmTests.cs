@@ -67,6 +67,24 @@ namespace AlgorithmPracticeTests
             MultiplicationAlgorithm.Multiply("00", "00").Should().Be("0");
         }
 
+        [Fact]
+        public void Multiply_WhenOneFrontNegative_ReturnsNegative()
+        {
+            MultiplicationAlgorithm.Multiply("-1", "1").Should().Be("-1");
+        }
+
+        [Fact]
+        public void Multiply_WhenOneBackNegative_ReturnsNegative()
+        {
+            MultiplicationAlgorithm.Multiply("1", "-1").Should().Be("-1");
+        }
+
+        [Fact]
+        public void Multiply_WhenDoubleNegative_ReturnsPositive()
+        {
+            MultiplicationAlgorithm.Multiply("-1", "-1").Should().Be("1");
+        }
+
         [Theory]
         [InlineData("foo", "0")]
         [InlineData("0", "foo")]

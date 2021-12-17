@@ -12,6 +12,11 @@ namespace AlgorithmPractice.Algorithms
             factor1.ThrowIfNullOrEmpty();
             factor2.ThrowIfNullOrEmpty();
 
+            var sign = 1;
+
+            ComputeSign(ref factor1, ref sign);
+            ComputeSign(ref factor2, ref sign);
+
             var subProducts = new List<string>();
 
             for (var i = factor2.Length - 1; i >= 0; i--)
@@ -50,7 +55,21 @@ namespace AlgorithmPractice.Algorithms
 
             product = TrimLeadingZeros(product);
 
+            if (sign < 0)
+            {
+                product = "-" + product;
+            }
+
             return product;
+        }
+
+        private static void ComputeSign(ref string factor, ref int sign)
+        {
+            if (factor.StartsWith("-"))
+            {
+                sign *= -1;
+                factor = factor.Substring(1);
+            }
         }
 
         private static string TrimLeadingZeros(string product)
