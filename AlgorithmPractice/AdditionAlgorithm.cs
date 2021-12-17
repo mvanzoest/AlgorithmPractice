@@ -14,23 +14,22 @@ namespace AlgorithmPractice
         /// </summary>
         public static string Add(string operand1, string operand2)
         {
-            var chars1 = operand1.ToCharList();
-            var chars2 = operand2.ToCharList();
+            var chars = GetChars(operand1, operand2);
 
-            if (chars1.Count != chars2.Count)
+            if (chars.Item1.Count != chars.Item2.Count)
             {
-                chars1 = PadNumber(chars1, Math.Max(chars2.Count - chars1.Count, 0));
-                chars2 = PadNumber(chars2, Math.Max(chars1.Count - chars2.Count, 0));
+                chars.Item1 = PadNumber(chars.Item1, Math.Max(chars.Item2.Count - chars.Item1.Count, 0));
+                chars.Item2 = PadNumber(chars.Item2, Math.Max(chars.Item1.Count - chars.Item2.Count, 0));
             }
 
             var carry = 0;
 
             var sum = new StringBuilder();
 
-            for (var i = chars1.Count - 1; i >= 0; i--)
+            for (var i = chars.Item1.Count - 1; i >= 0; i--)
             {
-                var d1 = GetDigit(chars1[i]);
-                var d2 = GetDigit(chars2[i]);
+                var d1 = GetDigit(chars.Item1[i]);
+                var d2 = GetDigit(chars.Item2[i]);
 
                 var result = d1 + d2 + carry;
                 var digit = result % 10;
@@ -46,6 +45,11 @@ namespace AlgorithmPractice
             }
 
             return sum.ToString();
+        }
+
+        private static (List<char>, List<char>) GetChars(string operand1, string operand2)
+        {
+            return (operand1.ToCharList(), operand2.ToCharList());
         }
 
         private static List<char> PadNumber(List<char> chars, int paddingSize)
