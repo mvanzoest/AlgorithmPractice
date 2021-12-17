@@ -1,5 +1,6 @@
 ﻿using System;
 using AlgorithmPractice;
+using AlgorithmPractice.Algorithms;
 using FluentAssertions;
 using Xunit;
 

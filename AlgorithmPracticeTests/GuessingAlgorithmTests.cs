@@ -1,5 +1,6 @@
 using System.Linq;
 using AlgorithmPractice;
+using AlgorithmPractice.Algorithms;
 using FluentAssertions;
 using Xunit;
 

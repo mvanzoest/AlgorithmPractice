@@ -1,4 +1,4 @@
-﻿namespace AlgorithmPractice
+﻿namespace AlgorithmPractice.Algorithms
 {
     public static class GuessingAlgorithm
     {
