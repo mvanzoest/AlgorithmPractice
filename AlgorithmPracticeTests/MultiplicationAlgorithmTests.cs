@@ -17,5 +17,29 @@ namespace AlgorithmPracticeTests
         {
             MultiplicationAlgorithm.Multiply("10", "10").Should().Be("100");
         }
+
+        [Fact]
+        public void Multiply_2DigitOperands_ReturnsProduct()
+        {
+            MultiplicationAlgorithm.Multiply("36", "71").Should().Be("2556");
+        }
+
+        [Fact]
+        public void Multiply_OperandsDifferingBy1Digit_ReturnsProduct()
+        {
+            MultiplicationAlgorithm.Multiply("7", "71").Should().Be("497");
+        }
+
+        [Fact]
+        public void Multiply_OperandsDifferingBy2DigitsBackHeavy_ReturnsProduct()
+        {
+            MultiplicationAlgorithm.Multiply("7", "100").Should().Be("700");
+        }
+
+        [Fact]
+        public void Multiply_OperandsDifferingBy2DigitsFrontHeavy_ReturnsProduct()
+        {
+            MultiplicationAlgorithm.Multiply("700", "1").Should().Be("700");
+        }
     }
 }
