@@ -1,6 +1,6 @@
 ﻿namespace AlgorithmPractice.Algorithms.Search
 {
-    public static class GuessingAlgorithm
+    public static class Guessing
     {
         /// <summary>
         /// Returns how many log(n) turns it takes to find value in array, or -1 if not found.

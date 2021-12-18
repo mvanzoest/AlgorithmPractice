@@ -2,7 +2,7 @@
 
 namespace AlgorithmPractice.Algorithms.Math
 {
-    public static class EuclideanAlgorithm
+    public static class Euclidean
     {
         public static int ComputeGcd(int a, int b)
         {

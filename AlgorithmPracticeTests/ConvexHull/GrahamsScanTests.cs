@@ -1,6 +1,6 @@
 ﻿namespace AlgorithmPracticeTests.ConvexHull
 {
-    public class GrahamsScanAlgorithmTests
+    public class GrahamsScanTests
     {
     }
 }

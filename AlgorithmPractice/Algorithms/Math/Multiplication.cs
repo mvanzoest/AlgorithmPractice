@@ -5,7 +5,7 @@ using AlgorithmPractice.Utilities;
 
 namespace AlgorithmPractice.Algorithms.Math
 {
-    public static class MultiplicationAlgorithm
+    public static class Multiplication
     {
         public static string Multiply(string topFactor, string bottomFactor)
         {
@@ -75,7 +75,7 @@ namespace AlgorithmPractice.Algorithms.Math
 
             foreach (var subProduct in subProducts)
             {
-                product = AdditionAlgorithm.Add(product, subProduct);
+                product = Addition.Add(product, subProduct);
             }
 
             return product;

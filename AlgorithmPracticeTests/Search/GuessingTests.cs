@@ -5,7 +5,7 @@ using Xunit;
 
 namespace AlgorithmPracticeTests.Search
 {
-    public class GuessingAlgorithmTests
+    public class GuessingTests
     {
         [Fact]
         public void Turns_WhenMiddleValue_Returns1()
@@ -13,7 +13,7 @@ namespace AlgorithmPracticeTests.Search
             var array = new [] { 1, 2, 3 };
             var value = 2;
 
-            var result = GuessingAlgorithm.Turns(array, value);
+            var result = Guessing.Turns(array, value);
 
             result.Should().Be(1);
         }
@@ -24,7 +24,7 @@ namespace AlgorithmPracticeTests.Search
             var array = new [] { 1, 2, 3, 4 };
             var value = 3;
 
-            var result = GuessingAlgorithm.Turns(array, value);
+            var result = Guessing.Turns(array, value);
 
             result.Should().Be(2);
         }
@@ -35,7 +35,7 @@ namespace AlgorithmPracticeTests.Search
             var array = new [] { 1, 2, 3, 4 };
             var value = 4;
 
-            var result = GuessingAlgorithm.Turns(array, value);
+            var result = Guessing.Turns(array, value);
 
             result.Should().Be(3);
         }
@@ -46,7 +46,7 @@ namespace AlgorithmPracticeTests.Search
             var array = new[] { 1, 2, 3, 4 };
             var value = 1;
 
-            var result = GuessingAlgorithm.Turns(array, value);
+            var result = Guessing.Turns(array, value);
 
             result.Should().Be(2);
         }
@@ -57,7 +57,7 @@ namespace AlgorithmPracticeTests.Search
             var array = new[] { 1, 2, 3 };
             var value = 4;
 
-            var result = GuessingAlgorithm.Turns(array, value);
+            var result = Guessing.Turns(array, value);
 
             result.Should().Be(-1);
         }
@@ -68,7 +68,7 @@ namespace AlgorithmPracticeTests.Search
             var array = Enumerable.Range(1, 1000).ToArray();
             var value = 867;
 
-            var result = GuessingAlgorithm.Turns(array, value);
+            var result = Guessing.Turns(array, value);
 
             // 500, 750, 875, 812, 844, 860, 868, 864, 866, 867
 

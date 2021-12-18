@@ -5,7 +5,7 @@ using AlgorithmPractice.Utilities;
 
 namespace AlgorithmPractice.Algorithms.Math
 {
-    public static class AdditionAlgorithm
+    public static class Addition
     {
         /// <summary>
         /// Adds two numbers represented as strings.

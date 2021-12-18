@@ -1,6 +1,6 @@
 ﻿namespace AlgorithmPractice.Algorithms.ConvexHull
 {
-    public class GrahamsScanAlgorithm
+    public class GrahamsScan
     {
         
     }
