@@ -1,10 +1,9 @@
 using System.Linq;
-using AlgorithmPractice;
-using AlgorithmPractice.Algorithms;
+using AlgorithmPractice.Algorithms.Search;
 using FluentAssertions;
 using Xunit;
 
-namespace AlgorithmPracticeTests
+namespace AlgorithmPracticeTests.Search
 {
     public class GuessingAlgorithmTests
     {

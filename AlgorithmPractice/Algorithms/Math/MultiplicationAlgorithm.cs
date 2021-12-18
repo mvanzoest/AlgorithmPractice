@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AlgorithmPractice.Utilities;
 
-namespace AlgorithmPractice.Algorithms
+namespace AlgorithmPractice.Algorithms.Math
 {
     public static class MultiplicationAlgorithm
     {

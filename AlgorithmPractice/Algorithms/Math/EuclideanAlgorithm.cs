@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AlgorithmPractice.Algorithms
+namespace AlgorithmPractice.Algorithms.Math
 {
     public static class EuclideanAlgorithm
     {
@@ -9,8 +9,8 @@ namespace AlgorithmPractice.Algorithms
             a.ThrowIfNonPositive();
             b.ThrowIfNonPositive();
 
-            var big = Math.Max(a, b);
-            var small = Math.Min(a, b);
+            var big = System.Math.Max(a, b);
+            var small = System.Math.Min(a, b);
 
             var remainder = big % small;
 

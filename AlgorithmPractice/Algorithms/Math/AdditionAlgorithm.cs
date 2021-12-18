@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlgorithmPractice.Utilities;
 
-namespace AlgorithmPractice.Algorithms
+namespace AlgorithmPractice.Algorithms.Math
 {
     public static class AdditionAlgorithm
     {
@@ -45,8 +44,8 @@ namespace AlgorithmPractice.Algorithms
         {
             if (chars.Item1.Count != chars.Item2.Count)
             {
-                chars.Item1 = PadNumber(chars.Item1, Math.Max(chars.Item2.Count - chars.Item1.Count, 0));
-                chars.Item2 = PadNumber(chars.Item2, Math.Max(chars.Item1.Count - chars.Item2.Count, 0));
+                chars.Item1 = PadNumber(chars.Item1, System.Math.Max(chars.Item2.Count - chars.Item1.Count, 0));
+                chars.Item2 = PadNumber(chars.Item2, System.Math.Max(chars.Item1.Count - chars.Item2.Count, 0));
             }
 
             return chars;

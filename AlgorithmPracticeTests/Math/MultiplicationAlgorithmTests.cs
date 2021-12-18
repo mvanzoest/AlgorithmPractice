@@ -1,9 +1,9 @@
 ﻿using System;
-using AlgorithmPractice.Algorithms;
+using AlgorithmPractice.Algorithms.Math;
 using FluentAssertions;
 using Xunit;
 
-namespace AlgorithmPracticeTests
+namespace AlgorithmPracticeTests.Math
 {
     public class MultiplicationAlgorithmTests
     {
