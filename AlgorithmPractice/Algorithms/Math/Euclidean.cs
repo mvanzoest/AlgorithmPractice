@@ -4,6 +4,9 @@ namespace AlgorithmPractice.Algorithms.Math
 {
     public static class Euclidean
     {
+        /// <summary>
+        /// Finds the greatest common denominator (GCD) of two numbers.
+        /// </summary>
         public static int ComputeGcd(int a, int b)
         {
             a.ThrowIfNonPositive();

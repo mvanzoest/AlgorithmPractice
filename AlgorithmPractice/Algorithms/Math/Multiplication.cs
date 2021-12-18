@@ -7,6 +7,9 @@ namespace AlgorithmPractice.Algorithms.Math
 {
     public static class Multiplication
     {
+        /// <summary>
+        /// Multiplies two numbers represented as strings.
+        /// </summary>
         public static string Multiply(string topFactor, string bottomFactor)
         {
             topFactor.ThrowIfNullOrEmpty();
