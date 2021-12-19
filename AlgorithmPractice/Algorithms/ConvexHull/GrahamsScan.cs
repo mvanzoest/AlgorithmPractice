@@ -9,6 +9,25 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
     {
         private const int MaxAngle = 180;
 
+        private class PolarAngleDescending : IComparer<AngledPoint>
+        {
+            public int Compare(AngledPoint x, AngledPoint y)
+            {
+                if (x?.Angle < y?.Angle)
+                {
+                    return 1;
+                }
+                else if (y?.Angle < x?.Angle)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
         /// <summary>
         /// Finds the convex hull of a set of points on a Cartesian plane.
         /// The first element is the lowest point, and
@@ -20,7 +39,7 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
             var low = plane[lowIndex];
             var polarAngles = CalculatePolarAngles(plane, low).ToList();
 
-            polarAngles.Sort();
+            polarAngles.Sort(new PolarAngleDescending());
 
             var hull = new List<AngledPoint>
             {
@@ -121,7 +140,7 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
             }
         }
 
-        private class AngledPoint : IComparable<AngledPoint>
+        private class AngledPoint
         {
             public AngledPoint(Point point, double angle)
             {
@@ -131,22 +150,6 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 
             public Point Point { get; }
             public double Angle { get; }
-
-            public int CompareTo(AngledPoint other)
-            {
-                if (other == null || Angle < other.Angle)
-                {
-                    return 1;
-                }
-                else if (other.Angle < Angle)
-                {
-                    return -1;
-                }
-                else
-                {
-                    return 0;
-                }
-            }
         }
     }
 }
