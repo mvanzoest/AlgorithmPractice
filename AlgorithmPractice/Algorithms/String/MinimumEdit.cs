@@ -11,40 +11,77 @@ namespace AlgorithmPractice.Algorithms.String
             s1.ThrowIfNull(nameof(s1));
             s2.ThrowIfNull(nameof(s2));
 
-            var costs = new int[s1.Length + 1, s2.Length + 1];
-            var operations = new int[s1.Length + 1, s2.Length + 1];
+            var m = new int[s1.Length + 1, s2.Length + 1];
+            var op = new int[s1.Length + 1, s2.Length + 1];
 
-            Initialize(costs, s1, s2);
+            Initialize(m, s1, s2);
 
             for (var i = 1; i <= s1.Length; i++)
             {
                 for (var j = 1; j <= s2.Length; j++)
                 {
-                    var minCost = 1;
-
-                    if (s1[i - 1] == s2[j - 1])
-                    {
-                        minCost = 0;
-                    }
-
-                    var replace = costs[i - 1, j - 1] + minCost;
-                    var remove = costs[i - 1, j] + 1;
-                    var insert = costs[i, j - 1] + 1;
-
-                    var localCosts = new [] {replace, remove, insert};
-                    var min = Min(localCosts);
-
-                    costs[i, j] = min.Value;
-                    operations[i, j] = min.Index;
+                    CalculateCosts(s1, s2, i, j, m, op);
                 }
             }
 
-            var cost = costs[s1.Length, s2.Length];
-            var ops = TraceOperations(s1, s2, operations, costs);
+            var cost = m[s1.Length, s2.Length];
+            var ops = TraceOperations(s1, s2, op, m);
 
             var result = new MinimumEditResult(cost, ops);
 
             return result;
+        }
+
+        private static void Initialize(int[,] matrix, string s1, string s2)
+        {
+            matrix[0, 0] = 0;
+
+            for (var i = 1; i <= s1.Length; i++)
+            {
+                matrix[i, 0] = i;
+            }
+            for (var j = 1; j <= s2.Length; j++)
+            {
+                matrix[0, j] = j;
+            }
+        }
+
+        private static void CalculateCosts(string s1, string s2, int i, int j, int[,] m, int[,] op)
+        {
+            var cost = 1;
+
+            if (s1[i - 1] == s2[j - 1])
+            {
+                cost = 0;
+            }
+
+            var replace = m[i - 1, j - 1] + cost;
+            var remove = m[i - 1, j] + 1;
+            var insert = m[i, j - 1] + 1;
+
+            var costs = new[] { replace, remove, insert };
+
+            var (value, index) = Min(costs);
+
+            m[i, j] = value;
+            op[i, j] = index;
+        }
+
+        private static (int Value, int Index) Min(int[] values)
+        {
+            var value = int.MaxValue;
+            var index = int.MaxValue;
+
+            for (var i = 0; i < values.Length; i++)
+            {
+                if (values[i] < value)
+                {
+                    value = values[i];
+                    index = i;
+                }
+            }
+
+            return (value, index);
         }
 
         private static string[] TraceOperations(string s1, string s2, int[,] operations, int[,] matrix)
@@ -79,37 +116,6 @@ namespace AlgorithmPractice.Algorithms.String
             }
 
             return ops.ToArray();
-        }
-
-        private static void Initialize(int[,] matrix, string s1, string s2)
-        {
-            matrix[0, 0] = 0;
-
-            for (var i = 1; i <= s1.Length; i++)
-            {
-                matrix[i, 0] = i;
-            }
-            for (var j = 1; j <= s2.Length; j++)
-            {
-                matrix[0, j] = j;
-            }
-        }
-
-        private static (int Value, int Index) Min(int[] values)
-        {
-            var value = int.MaxValue;
-            var index = int.MaxValue;
-
-            for (var i = 0; i < values.Length; i++)
-            {
-                if (values[i] < value)
-                {
-                    value = values[i];
-                    index = i;
-                }
-            }
-
-            return (value, index);
         }
 
         private static void ThrowIfNull(this string s, string name)
