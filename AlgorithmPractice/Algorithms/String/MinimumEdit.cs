@@ -25,24 +25,24 @@ namespace AlgorithmPractice.Algorithms.String
             }
 
             var cost = m[s1.Length, s2.Length];
-            var ops = TraceOperations(s1, s2, op, m);
+            var operations = TraceOperations(s1, s2, m, op);
 
-            var result = new MinimumEditResult(cost, ops);
+            var result = new MinimumEditResult(cost, operations);
 
             return result;
         }
 
-        private static void Initialize(int[,] matrix, string s1, string s2)
+        private static void Initialize(int[,] m, string s1, string s2)
         {
-            matrix[0, 0] = 0;
+            m[0, 0] = 0;
 
             for (var i = 1; i <= s1.Length; i++)
             {
-                matrix[i, 0] = i;
+                m[i, 0] = i;
             }
             for (var j = 1; j <= s2.Length; j++)
             {
-                matrix[0, j] = j;
+                m[0, j] = j;
             }
         }
 
@@ -84,30 +84,30 @@ namespace AlgorithmPractice.Algorithms.String
             return (value, index);
         }
 
-        private static string[] TraceOperations(string s1, string s2, int[,] operations, int[,] matrix)
+        private static string[] TraceOperations(string s1, string s2, int[,] m, int[,] op)
         {
             var i = s1.Length;
             var j = s2.Length;
 
-            var ops = new List<string>();
+            var operations = new List<string>();
 
             while (i != 0 || j != 0)
             {
-                if (operations[i, j] == (int)MinimumEditOperator.Remove || j == 0)
+                if (op[i, j] == (int)MinimumEditOperator.Remove || j == 0)
                 {
-                    ops.Add($"remove {i - 1}-th char {s1[i - 1]} of {s1}");
+                    operations.Add($"remove {i - 1}-th char {s1[i - 1]} of {s1}");
                     i -= 1;
                 }
-                else if (operations[i, j] == (int)MinimumEditOperator.Remove || i == 0)
+                else if (op[i, j] == (int)MinimumEditOperator.Remove || i == 0)
                 {
-                    ops.Add($"insert {j - 1}-th char {s2[j - 1]} of {s2}");
+                    operations.Add($"insert {j - 1}-th char {s2[j - 1]} of {s2}");
                     j -= 1;
                 }
                 else
                 {
-                    if (matrix[i - 1, j - 1] < matrix[i, j])
+                    if (m[i - 1, j - 1] < m[i, j])
                     {
-                        ops.Add($"replace {i - 1}-th char of {s1} ({s1[i - 1]}) with {s2[j - 1]}");
+                        operations.Add($"replace {i - 1}-th char of {s1} ({s1[i - 1]}) with {s2[j - 1]}");
                     }
 
                     i -= 1;
@@ -115,7 +115,7 @@ namespace AlgorithmPractice.Algorithms.String
                 }
             }
 
-            return ops.ToArray();
+            return operations.ToArray();
         }
 
         private static void ThrowIfNull(this string s, string name)
