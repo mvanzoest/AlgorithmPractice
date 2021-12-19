@@ -77,6 +77,11 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 
             var slope = rise / run;
 
+            if (slope == 0)
+            {
+                return true;
+            }
+
             var boundary = lastPoint.X + (nextPoint.Y - lastPoint.Y) / slope;
             
             if (rise >= 0)
