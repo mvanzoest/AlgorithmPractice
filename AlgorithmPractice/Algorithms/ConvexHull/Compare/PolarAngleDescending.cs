@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using AlgorithmPractice.Algorithms.ConvexHull.Models;
 
 namespace AlgorithmPractice.Algorithms.ConvexHull.Compare
@@ -16,6 +17,9 @@ namespace AlgorithmPractice.Algorithms.ConvexHull.Compare
 
         public int Compare(Point p1, Point p2)
         {
+            Debug.Assert(p1 != null);
+            Debug.Assert(p2 != null);
+
             var p1Angle = GetAngle(p1);
             var p2Angle = GetAngle(p2);
 
