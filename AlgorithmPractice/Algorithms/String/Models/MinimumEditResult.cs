@@ -11,17 +11,6 @@
         public string[] Operations { get; }
     }
 
-    public class MinimumEditOperation
-    {
-        public MinimumEditOperation(MinimumEditOperator @operator, string value)
-        {
-            Operator = @operator;
-            Value = value;
-        }
-        public MinimumEditOperator Operator { get; }
-        public string Value { get; }
-    }
-
     public enum MinimumEditOperator
     {
         Replace,

@@ -98,7 +98,7 @@ namespace AlgorithmPractice.Algorithms.String
                     operations.Add($"remove {i - 1}-th char {s1[i - 1]} of {s1}");
                     i -= 1;
                 }
-                else if (op[i, j] == (int)MinimumEditOperator.Remove || i == 0)
+                else if (op[i, j] == (int)MinimumEditOperator.Insert || i == 0)
                 {
                     operations.Add($"insert {j - 1}-th char {s2[j - 1]} of {s2}");
                     j -= 1;
