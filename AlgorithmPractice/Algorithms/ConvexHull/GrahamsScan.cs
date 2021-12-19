@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using AlgorithmPractice.Algorithms.ConvexHull.Models;
 
 namespace AlgorithmPractice.Algorithms.ConvexHull
@@ -9,15 +8,25 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
     {
         private const int MaxAngle = 180;
 
-        private class PolarAngleDescending : IComparer<AngledPoint>
+        private class PolarAngleDescending : IComparer<Point>
         {
-            public int Compare(AngledPoint x, AngledPoint y)
+            private readonly Point _base;
+
+            public PolarAngleDescending(Point @base)
             {
-                if (x?.Angle < y?.Angle)
+                _base = @base;
+            }
+
+            public int Compare(Point p1, Point p2)
+            {
+                var p1Angle = GetAngle(p1);
+                var p2Angle = GetAngle(p2);
+
+                if (p1Angle < p2Angle)
                 {
                     return 1;
                 }
-                else if (y?.Angle < x?.Angle)
+                else if (p2Angle < p1Angle)
                 {
                     return -1;
                 }
@@ -26,6 +35,15 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
                     return 0;
                 }
             }
+
+            private double GetAngle(Point p)
+            {
+                if (p == _base)
+                {
+                    return MaxAngle;
+                }
+                return System.Math.Atan2(p.Y - _base.Y, p.X - _base.X) * MaxAngle / System.Math.PI;
+            }
         }
 
         /// <summary>
@@ -33,38 +51,41 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
         /// The first element is the lowest point, and
         /// the remaining elements are in clockwise order around the hull.
         /// </summary>
-        public static Point[] Scan(Point[] plane)
+        public static Point[] Scan(Point[] source)
         {
+            var plane = new Point[source.Length];
+
+            Array.Copy(source, plane, source.Length);
+
             var lowIndex = FindLow(plane);
             var low = plane[lowIndex];
-            var polarAngles = CalculatePolarAngles(plane, low).ToList();
 
-            polarAngles.Sort(new PolarAngleDescending());
+            Array.Sort(plane, new PolarAngleDescending(low));
 
-            var hull = new List<AngledPoint>
+            var hull = new List<Point>
             {
-                polarAngles[0],
-                polarAngles[1],
+                plane[0],
+                plane[1],
             };
 
-            for (var i = 2; i < polarAngles.Count; i++)
+            for (var i = 2; i < plane.Length; i++)
             {
-                while (IsLeftTurn(SecondLast(hull), Last(hull), polarAngles[i]))
+                while (IsLeftTurn(SecondLast(hull), Last(hull), plane[i]))
                 {
                     hull.RemoveAt(hull.Count - 1);
                 }
-                hull.Add(polarAngles[i]);
+                hull.Add(plane[i]);
             }
 
-            return hull.Select(p => p.Point).ToArray();
+            return hull.ToArray();
         }
 
-        private static AngledPoint SecondLast(List<AngledPoint> hull)
+        private static Point SecondLast(List<Point> hull)
         {
             return hull.Count < 2 ? null : hull[hull.Count - 2];
         }
 
-        private static AngledPoint Last(List<AngledPoint> hull)
+        private static Point Last(List<Point> hull)
         {
             return hull[hull.Count - 1];
         }
@@ -86,70 +107,35 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
             return currentLowIndex;
         }
 
-        private static AngledPoint[] CalculatePolarAngles(Point[] plane, Point point)
-        {
-            var polarAngles = new AngledPoint[plane.Length];
-
-            for (var i = 0; i < plane.Length; i++)
-            {
-                var p1 = point;
-                var p2 = plane[i];
-
-                if (p1 == p2)
-                {
-                    polarAngles[i] = new AngledPoint(p2, MaxAngle);
-                }
-                else
-                {
-                    var angle = System.Math.Atan2(p2.Y - p1.Y, p2.X - p1.X) * MaxAngle / System.Math.PI;
-                    polarAngles[i] = new AngledPoint(p2, angle);
-                }
-            }
-
-            return polarAngles;
-        }
-
-        private static bool IsLeftTurn(AngledPoint secondLast, AngledPoint last, AngledPoint current)
+        private static bool IsLeftTurn(Point secondLast, Point last, Point current)
         {
             if (secondLast == null)
             {
                 return false;
             }
 
-            var p1 = secondLast.Point;
-            var p2 = last.Point;
+            var p1 = secondLast;
+            var p2 = last;
 
             var rise = p2.Y - p1.Y;
             var run = p2.X - p1.X;
 
             var m = rise / run;
 
-            var y1 = last.Point.Y;
-            var x1 = last.Point.X;
+            var y1 = last.Y;
+            var x1 = last.X;
 
-            var y = current.Point.Y;
+            var y = current.Y;
             var x = x1 + (y - y1) / m;
 
             if (rise >= 0)
             {
-                return current.Point.X <= x;
+                return current.X <= x;
             }
             else
             {
-                return x < current.Point.X;
+                return x < current.X;
             }
-        }
-
-        private class AngledPoint
-        {
-            public AngledPoint(Point point, double angle)
-            {
-                Point = point;
-                Angle = angle;
-            }
-
-            public Point Point { get; }
-            public double Angle { get; }
         }
     }
 }
