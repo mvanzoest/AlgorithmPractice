@@ -1,9 +1,14 @@
-﻿namespace AlgorithmPractice.Algorithms.String
+﻿using System;
+
+namespace AlgorithmPractice.Algorithms.String
 {
     public static class MinimumEditDistance
     {
         public static int MinEditDistance(string s1, string s2)
         {
+            s1.ThrowIfNull(nameof(s1));
+            s2.ThrowIfNull(nameof(s2));
+
             var matrix = new int[s1.Length + 1, s2.Length + 1];
 
             Initialize(matrix, s1, s2);
@@ -52,6 +57,14 @@
             }
 
             return minimum;
+        }
+
+        private static void ThrowIfNull(this string s, string name)
+        {
+            if (s == null)
+            {
+                throw new ArgumentNullException(name);
+            }
         }
     }
 }
