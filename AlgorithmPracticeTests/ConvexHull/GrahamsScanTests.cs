@@ -1,4 +1,5 @@
-﻿using AlgorithmPractice.Algorithms.ConvexHull;
+﻿using System;
+using AlgorithmPractice.Algorithms.ConvexHull;
 using AlgorithmPractice.Algorithms.ConvexHull.Models;
 using FluentAssertions;
 using Xunit;
@@ -174,6 +175,12 @@ namespace AlgorithmPracticeTests.ConvexHull
             result.Should<Point>().HaveCount(2);
             result.Should<Point>().Contain(plane[0]);
             result.Should<Point>().Contain(plane[1]);
+        }
+
+        [Fact]
+        public void Scan_WithNullPlane_Throws()
+        {
+            Assert.Throws<ArgumentNullException>(() => GrahamsScan.Scan(null));
         }
     }
 }

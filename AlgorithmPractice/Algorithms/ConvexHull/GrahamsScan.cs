@@ -14,6 +14,11 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
         /// </summary>
         public static Point[] Scan(Point[] points)
         {
+            if (points == null)
+            {
+                throw new ArgumentNullException(nameof(points));
+            }
+
             var plane = new Point[points.Length];
 
             Array.Copy(points, plane, points.Length);
