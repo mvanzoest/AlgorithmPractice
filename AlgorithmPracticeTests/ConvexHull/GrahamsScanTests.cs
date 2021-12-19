@@ -155,5 +155,25 @@ namespace AlgorithmPracticeTests.ConvexHull
             result.Should<Point>().Contain(plane[0]);
             result.Should<Point>().Contain(plane[2]);
         }
+
+        [Fact]
+        public void Scan_WithOnlyCollinearPointsInWeirdOrderOnY_ReturnsLeftAndRight()
+        {
+            // Arrange
+            var plane = new[]
+            {
+                new Point(1, 0),
+                new Point(-1, 0),
+                new Point(0, 0),
+            };
+
+            // Act
+            var result = GrahamsScan.Scan(plane);
+
+            // Assert
+            result.Should<Point>().HaveCount(2);
+            result.Should<Point>().Contain(plane[0]);
+            result.Should<Point>().Contain(plane[1]);
+        }
     }
 }

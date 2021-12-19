@@ -40,13 +40,24 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
             return hull.ToArray();
         }
 
+        /// <summary>
+        /// Returns the point with the lowest Y value.
+        /// If there are multiple, it returns the first point with the lowest X value.
+        /// </summary>
         private static Point FindLow(Point[] plane)
         {
             var currentLow = plane[0];
 
             for (var i = 1; i < plane.Length; i++)
             {
-                if (plane[i].Y < currentLow.Y)
+                if (System.Math.Abs(plane[i].Y - currentLow.Y) < 0.0001)
+                {
+                    if (plane[i].X < currentLow.X)
+                    {
+                        currentLow = plane[i];
+                    }
+                }
+                else if (plane[i].Y < currentLow.Y)
                 {
                     currentLow = plane[i];
                 }
