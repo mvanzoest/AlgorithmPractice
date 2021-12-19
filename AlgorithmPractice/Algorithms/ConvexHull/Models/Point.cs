@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AlgorithmPractice.Algorithms.ConvexHull.Models
+﻿namespace AlgorithmPractice.Algorithms.ConvexHull.Models
 {
     /// <summary>
     /// Represents a point on a Cartesian plane.
