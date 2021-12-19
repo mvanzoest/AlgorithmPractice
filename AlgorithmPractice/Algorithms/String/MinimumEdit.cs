@@ -1,10 +1,11 @@
 ﻿using System;
+using AlgorithmPractice.Algorithms.String.Models;
 
 namespace AlgorithmPractice.Algorithms.String
 {
-    public static class MinimumEditDistance
+    public static class MinimumEdit
     {
-        public static int MinEditDistance(string s1, string s2)
+        public static MinimumEditResult MinEdit(string s1, string s2)
         {
             s1.ThrowIfNull(nameof(s1));
             s2.ThrowIfNull(nameof(s2));
@@ -17,19 +18,16 @@ namespace AlgorithmPractice.Algorithms.String
             {
                 for (var j = 1; j <= s2.Length; j++)
                 {
-                    var cost = s1[i - 1] == s2[j - 1] ? 0 : 1;
-
-                    var replace = matrix[i - 1, j - 1] + cost;
-                    var remove = matrix[i - 1, j] + 1;
-                    var insert = matrix[i, j - 1] + 1;
-
-                    var minimum = Min(replace, remove, insert);
-
-                    matrix[i, j] = minimum;
+                    matrix[i, j] = CalculateMin(s1, s2, i, j, matrix);
                 }
             }
 
-            return matrix[s1.Length, s2.Length];
+            var cost = matrix[s1.Length, s2.Length];
+            var operations = new MinimumEditOperation[] { };
+
+            var result = new MinimumEditResult(cost, operations);
+
+            return result;
         }
 
         private static void Initialize(int[,] matrix, string s1, string s2)
@@ -42,6 +40,17 @@ namespace AlgorithmPractice.Algorithms.String
             {
                 matrix[0, j] = j;
             }
+        }
+
+        private static int CalculateMin(string s1, string s2, int i, int j, int[,] matrix)
+        {
+            var cost = s1[i - 1] == s2[j - 1] ? 0 : 1;
+
+            var replace = matrix[i - 1, j - 1] + cost;
+            var remove = matrix[i - 1, j] + 1;
+            var insert = matrix[i, j - 1] + 1;
+
+            return Min(replace, remove, insert);
         }
 
         private static int Min(params int[] values)
