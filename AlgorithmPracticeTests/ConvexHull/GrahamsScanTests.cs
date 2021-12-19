@@ -74,5 +74,44 @@ namespace AlgorithmPracticeTests.ConvexHull
             result.Should<Point>().Contain(plane[13]);
             result.Should<Point>().Contain(plane[14]);
         }
+
+        [Theory]
+        [InlineData(2)]
+        public void Scan_LessThanThreePoints_ReturnsAllPoints(int numPoints)
+        {
+            // Arrange
+            var plane = new Point[numPoints];
+
+            for (var i = 0; i < numPoints; i++)
+            {
+                plane[i] = new Point(0, i);
+            }
+
+            // Act
+            var result = GrahamsScan.Scan(plane);
+
+            // Assert
+            result.Should<Point>().HaveCount(numPoints);
+        }
+
+        [Fact]
+        public void Scan_WithCollinearPoints_IgnoresIntermediatePoints()
+        {
+            // Arrange
+            var plane = new Point[]
+            {
+                new Point(0, 0), // this one should not be part of the hull
+                new Point(0, 0.5), // this should be removed too
+                new Point(0, 1),
+                new Point(1, 0),
+                new Point(0, -1),
+            };
+
+            // Act
+            var result = GrahamsScan.Scan(plane);
+
+            // Assert
+            result.Should<Point>().HaveCount(3);
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 
             for (var i = 1; i < polarAngles.Count; i++)
             {
-                while (IsLeftTurn(hull[hull.Count - 2], hull[hull.Count - 1], polarAngles[i]))
+                while (IsLeftTurn(SecondLast(hull), Last(hull), polarAngles[i]))
                 {
                     hull.RemoveAt(hull.Count - 1);
                 }
@@ -37,6 +37,16 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
             }
 
             return hull.Select(p => p.Point).ToArray();
+        }
+
+        private static AngledPoint SecondLast(List<AngledPoint> hull)
+        {
+            return hull.Count < 2 ? null : hull[hull.Count - 2];
+        }
+
+        private static AngledPoint Last(List<AngledPoint> hull)
+        {
+            return hull[hull.Count - 1];
         }
         
         private static int FindLow(Point[] plane)
@@ -91,6 +101,11 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 
         private static bool IsLeftTurn(AngledPoint secondLast, AngledPoint last, AngledPoint current)
         {
+            if (secondLast == null)
+            {
+                return false;
+            }
+
             var p1 = secondLast.Point;
             var p2 = last.Point;
 
@@ -107,7 +122,7 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 
             if (rise >= 0)
             {
-                return current.Point.X < x;
+                return current.Point.X <= x;
             }
             else
             {
