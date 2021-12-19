@@ -11,10 +11,10 @@ namespace AlgorithmPractice.Algorithms.String
             s1.ThrowIfNull(nameof(s1));
             s2.ThrowIfNull(nameof(s2));
 
-            var matrix = new int[s1.Length + 1, s2.Length + 1];
+            var costs = new int[s1.Length + 1, s2.Length + 1];
             var operations = new int[s1.Length + 1, s2.Length + 1];
 
-            Initialize(matrix, s1, s2);
+            Initialize(costs, s1, s2);
 
             for (var i = 1; i <= s1.Length; i++)
             {
@@ -27,52 +27,58 @@ namespace AlgorithmPractice.Algorithms.String
                         minCost = 0;
                     }
 
-                    var replace = matrix[i - 1, j - 1] + minCost;
-                    var remove = matrix[i - 1, j] + 1;
-                    var insert = matrix[i, j - 1] + 1;
+                    var replace = costs[i - 1, j - 1] + minCost;
+                    var remove = costs[i - 1, j] + 1;
+                    var insert = costs[i, j - 1] + 1;
 
-                    var costs = new int[] {replace, remove, insert};
-                    var min = Min(costs);
+                    var localCosts = new [] {replace, remove, insert};
+                    var min = Min(localCosts);
 
-                    matrix[i, j] = min.Value;
+                    costs[i, j] = min.Value;
                     operations[i, j] = min.Index;
                 }
             }
 
-            var cost = matrix[s1.Length, s2.Length];
+            var cost = costs[s1.Length, s2.Length];
+            var ops = TraceOperations(s1, s2, operations, costs);
 
-            var currentI = s1.Length;
-            var currentJ = s2.Length;
+            var result = new MinimumEditResult(cost, ops);
+
+            return result;
+        }
+
+        private static string[] TraceOperations(string s1, string s2, int[,] operations, int[,] matrix)
+        {
+            var i = s1.Length;
+            var j = s2.Length;
 
             var ops = new List<string>();
 
-            while (currentI != 0 || currentJ != 0)
+            while (i != 0 || j != 0)
             {
-                if (operations[currentI, currentJ] == (int) MinimumEditOperator.Remove || currentJ == 0)
+                if (operations[i, j] == (int)MinimumEditOperator.Remove || j == 0)
                 {
-                    ops.Add($"remove {currentI - 1}-th char {s1[currentI - 1]} of {s1}");
-                    currentI -= 1;
+                    ops.Add($"remove {i - 1}-th char {s1[i - 1]} of {s1}");
+                    i -= 1;
                 }
-                else if (operations[currentI, currentJ] == (int) MinimumEditOperator.Remove || currentI == 0)
+                else if (operations[i, j] == (int)MinimumEditOperator.Remove || i == 0)
                 {
-                    ops.Add($"insert {currentJ - 1}-th char {s2[currentJ - 1]} of {s2}");
-                    currentJ -= 1;
+                    ops.Add($"insert {j - 1}-th char {s2[j - 1]} of {s2}");
+                    j -= 1;
                 }
                 else
                 {
-                    if (matrix[currentI - 1, currentJ - 1] < matrix[currentI, currentJ])
+                    if (matrix[i - 1, j - 1] < matrix[i, j])
                     {
-                        ops.Add($"replace {currentI - 1}-th char of {s1} ({s1[currentI - 1]}) with {s2[currentJ - 1]}");
+                        ops.Add($"replace {i - 1}-th char of {s1} ({s1[i - 1]}) with {s2[j - 1]}");
                     }
 
-                    currentI -= 1;
-                    currentJ -= 1;
+                    i -= 1;
+                    j -= 1;
                 }
             }
 
-            var result = new MinimumEditResult(cost, ops.ToArray());
-
-            return result;
+            return ops.ToArray();
         }
 
         private static void Initialize(int[,] matrix, string s1, string s2)
