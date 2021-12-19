@@ -21,6 +21,11 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 
             points.ThrowIfNullPoints();
 
+            if (points.Length < 3)
+            {
+                return points;
+            }
+
             var plane = new Point[points.Length];
 
             Array.Copy(points, plane, points.Length);

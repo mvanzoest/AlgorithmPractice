@@ -78,6 +78,8 @@ namespace AlgorithmPracticeTests.ConvexHull
 
         [Theory]
         [InlineData(2)]
+        [InlineData(1)]
+        [InlineData(0)]
         public void Scan_LessThanThreePoints_ReturnsAllPoints(int numPoints)
         {
             // Arrange
