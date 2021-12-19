@@ -7,6 +7,8 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 {
     public static class GrahamsScan
     {
+        private const int MaxAngle = 180;
+
         /// <summary>
         /// Finds the convex hull of a set of points on a Cartesian plane.
         /// The first element is the lowest point, and
@@ -16,18 +18,17 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
         {
             var lowIndex = FindLow(plane);
             var low = plane[lowIndex];
-            var planeExceptLow = RemoveLow(plane, lowIndex);
-            var polarAngles = CalculatePolarAngles(planeExceptLow, low).ToList();
+            var polarAngles = CalculatePolarAngles(plane, low).ToList();
 
             polarAngles.Sort();
 
             var hull = new List<AngledPoint>
             {
-                new AngledPoint(low, 0),
-                polarAngles[0]
+                polarAngles[0],
+                polarAngles[1],
             };
 
-            for (var i = 1; i < polarAngles.Count; i++)
+            for (var i = 2; i < polarAngles.Count; i++)
             {
                 while (IsLeftTurn(SecondLast(hull), Last(hull), polarAngles[i]))
                 {
@@ -65,23 +66,6 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
 
             return currentLowIndex;
         }
-        
-        private static Point[] RemoveLow(Point[] plane, int lowIndex)
-        {
-            var planeExceptLow = new Point[plane.Length - 1];
-
-            for (var i = 0; i < lowIndex; i++)
-            {
-                planeExceptLow[i] = plane[i];
-            }
-
-            for (var j = lowIndex + 1; j < plane.Length; j++)
-            {
-                planeExceptLow[j - 1] = plane[j];
-            }
-
-            return planeExceptLow;
-        }
 
         private static AngledPoint[] CalculatePolarAngles(Point[] plane, Point point)
         {
@@ -91,9 +75,16 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
             {
                 var p1 = point;
                 var p2 = plane[i];
-                var angle = System.Math.Atan2(p2.Y - p1.Y, p2.X - p1.X) * 180 / System.Math.PI;
 
-                polarAngles[i] = new AngledPoint(p2, angle);
+                if (p1 == p2)
+                {
+                    polarAngles[i] = new AngledPoint(p2, MaxAngle);
+                }
+                else
+                {
+                    var angle = System.Math.Atan2(p2.Y - p1.Y, p2.X - p1.X) * MaxAngle / System.Math.PI;
+                    polarAngles[i] = new AngledPoint(p2, angle);
+                }
             }
 
             return polarAngles;
