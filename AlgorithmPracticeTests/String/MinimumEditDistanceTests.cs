@@ -5,12 +5,12 @@ using Xunit;
 
 namespace AlgorithmPracticeTests.String
 {
+    // ReSharper disable StringLiteralTypo
     public class MinimumEditDistanceTests
     {
         [Fact]
         public void MinEditDistance_Chapter3Example_ReturnsThree()
         {
-            // ReSharper disable StringLiteralTypo
             MinimumEditDistance.MinEditDistance("GCTAC", "CTCA").Should().Be(3);
         }
 
@@ -21,6 +21,18 @@ namespace AlgorithmPracticeTests.String
         {
             Assert.Throws<ArgumentNullException>(() =>
                 MinimumEditDistance.MinEditDistance(s1, s2));
+        }
+
+        [Fact]
+        public void MinEditDistance_WhenSameInput_ReturnsZero()
+        {
+            MinimumEditDistance.MinEditDistance("GCTAC", "GCTAC").Should().Be(0);
+        }
+
+        [Fact]
+        public void MinEditDistance_WhenEmptyString_ReturnsOtherStringLength()
+        {
+            MinimumEditDistance.MinEditDistance("GCTAC", "").Should().Be(5);
         }
     }
 }
