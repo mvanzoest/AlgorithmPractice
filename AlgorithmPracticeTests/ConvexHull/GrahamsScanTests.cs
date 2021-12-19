@@ -180,7 +180,15 @@ namespace AlgorithmPracticeTests.ConvexHull
         [Fact]
         public void Scan_WithNullPlane_Throws()
         {
-            Assert.Throws<ArgumentNullException>(() => GrahamsScan.Scan(null));
+            Assert.Throws<ArgumentNullException>(
+                () => GrahamsScan.Scan(null));
+        }
+
+        [Fact]
+        public void Scan_WithNullPoint_Throws()
+        {
+            Assert.Throws<InvalidOperationException>(
+                () => GrahamsScan.Scan(new Point[]{null}));
         }
     }
 }

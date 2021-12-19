@@ -19,6 +19,8 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
                 throw new ArgumentNullException(nameof(points));
             }
 
+            points.ThrowIfNullPoints();
+
             var plane = new Point[points.Length];
 
             Array.Copy(points, plane, points.Length);
@@ -107,6 +109,17 @@ namespace AlgorithmPractice.Algorithms.ConvexHull
             else
             {
                 return boundary < nextPoint.X;
+            }
+        }
+
+        private static void ThrowIfNullPoints(this Point[] points)
+        {
+            foreach (var point in points)
+            {
+                if (point == null)
+                {
+                    throw new InvalidOperationException();
+                }
             }
         }
     }
