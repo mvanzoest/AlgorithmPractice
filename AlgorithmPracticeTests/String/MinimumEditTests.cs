@@ -34,5 +34,19 @@ namespace AlgorithmPracticeTests.String
         {
             MinimumEdit.MinEdit("GCTAC", "").Cost.Should().Be(5);
         }
+
+        [Fact]
+        public void MinEdit_Chapter3Example_RecordsOperations()
+        {
+            var expectedOperations = new []
+            {
+                "replace 4-th char of GCTAC (C) with A",
+                "replace 3-th char of GCTAC (A) with C",
+                "remove 0-th char G of GCTAC",
+            };
+            var actualOperations = MinimumEdit.MinEdit("GCTAC", "CTCA").Operations;
+
+            actualOperations.Should<string>().BeEquivalentTo(expectedOperations);
+        }
     }
 }

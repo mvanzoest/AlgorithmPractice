@@ -2,13 +2,13 @@
 {
     public class MinimumEditResult
     {
-        public MinimumEditResult(int cost, MinimumEditOperation[] operations)
+        public MinimumEditResult(int cost, string[] operations)
         {
             Cost = cost;
             Operations = operations;
         }
         public int Cost { get; }
-        public MinimumEditOperation[] Operations { get; }
+        public string[] Operations { get; }
     }
 
     public class MinimumEditOperation
