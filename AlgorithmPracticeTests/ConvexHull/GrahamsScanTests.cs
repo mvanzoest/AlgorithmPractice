@@ -98,7 +98,7 @@ namespace AlgorithmPracticeTests.ConvexHull
         public void Scan_WithCollinearPoints_IgnoresIntermediatePoints()
         {
             // Arrange
-            var plane = new Point[]
+            var plane = new []
             {
                 new Point(0, 0), // this one should not be part of the hull
                 new Point(0, 0.5), // this should be removed too
@@ -112,6 +112,28 @@ namespace AlgorithmPracticeTests.ConvexHull
 
             // Assert
             result.Should<Point>().HaveCount(3);
+        }
+
+        [Fact]
+        public void Scan_WithOnlyCollinearPointsOnX_ReturnsTopAndBottom()
+        {
+            // Arrange
+            var plane = new []
+            {
+                new Point(0, -2),
+                new Point(0, -1),
+                new Point(0, 0),
+                new Point(0, 1),
+                new Point(0, 2),
+            };
+
+            // Act
+            var result = GrahamsScan.Scan(plane);
+
+            // Assert
+            result.Should<Point>().HaveCount(2);
+            result.Should<Point>().Contain(plane[0]);
+            result.Should<Point>().Contain(plane[4]);
         }
     }
 }
