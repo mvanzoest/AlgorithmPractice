@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace AlgorithmPractice.Algorithms.Math
 {
-    public static class DynamicMax
+    public static class Maximum
     {
         /// <summary>
-        /// Finds the max in numbers using Dynamic Programming.
+        /// Finds the max in numbers using Divide and Conquer.
         /// </summary>
         public static int Max(List<int> numbers)
         {
